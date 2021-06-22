@@ -34,6 +34,6 @@ public class ServletWebApplicationInitializer implements ServletContainerInitial
     @Override
     public void onStartup(Set<Class<?>> c, ServletContext servletContext) throws ServletException {
         System.out.println("Hello,World 2021");
-        servletContext.addFilter("myFilter", MyFilter.class);
+        servletContext.addFilter("myFilter", MyFilter.class).addMappingForUrlPatterns(null,false, "/my");
     }
 }
