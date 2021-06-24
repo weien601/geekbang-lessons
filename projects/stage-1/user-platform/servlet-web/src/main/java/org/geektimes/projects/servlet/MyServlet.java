@@ -39,19 +39,25 @@ public class MyServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         PrintWriter writer = response.getWriter();
-        println(writer, "Hello,World");
+//        println(writer, "Hello,World1");
+
+        request.setAttribute("hello", "hello world!");
+
+        System.out.println(request.getAttribute("hello"));
 
         AsyncContext asyncContext = request.getAsyncContext();
 
         asyncContext.start(() -> {
             try {
-                println(writer, "Hello,World");
+                request.getRequestDispatcher("/hello.jsp").forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            asyncContext.complete(); // 异步完成
         });
 
-        asyncContext.complete(); // 异步完成
     }
 
     private static void println(Writer writer, Object message) throws IOException {
