@@ -56,6 +56,7 @@
         <curator.version>5.1.0</curator.version>
         <netty.version>4.1.65.Final</netty.version>
 
+        <mysql-connector.version>5.1.49</mysql-connector.version>
         <!-- Spring 依赖版本 -->
         <spring-boot.version>2.4.5</spring-boot.version>
 
@@ -211,6 +212,13 @@
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
                 <version>${derby.version}</version>
+            </dependency>
+
+            <!-- JDBC for MySQL -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
             </dependency>
 
             <!-- Hibernate ORM Core -->

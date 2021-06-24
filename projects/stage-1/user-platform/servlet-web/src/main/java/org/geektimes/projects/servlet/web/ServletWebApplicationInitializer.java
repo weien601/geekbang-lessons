@@ -18,9 +18,17 @@ package org.geektimes.projects.servlet.web;
 
 import org.geektimes.projects.servlet.filter.MyFilter;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
 
 /**
@@ -31,9 +39,38 @@ import java.util.Set;
  */
 public class ServletWebApplicationInitializer implements ServletContainerInitializer {
 
+    private static final String COMPONENT_ENV_CONTEXT_NAME = "java:comp/env";
+
     @Override
     public void onStartup(Set<Class<?>> c, ServletContext servletContext) throws ServletException {
         System.out.println("Hello,World 2021");
         servletContext.addFilter("myFilter", MyFilter.class).addMappingForUrlPatterns(null,false, "/my");
+
+        // 获取 JNDI 数据源
+
+        try {
+            Context context = new InitialContext();
+            Context envContext = (Context) context.lookup(COMPONENT_ENV_CONTEXT_NAME);
+            DataSource dataSource = (DataSource) envContext.lookup("jdbc/UserPlatformDB");
+
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            // 执行查询语句（DML）
+            ResultSet resultSet = statement.executeQuery("SELECT username, password, phone, address FROM admin");
+            while (resultSet.next()) {
+                System.out.printf("{username: %s, password: %s, phone: %s, address: %s }\n",
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("phone"),
+                    resultSet.getString("address"));
+            }
+            statement.close();
+            connection.close();
+
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
