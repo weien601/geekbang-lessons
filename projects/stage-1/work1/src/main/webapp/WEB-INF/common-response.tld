@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+    <description><![CDATA["Common Response Headers Tag"]]></description>
+    <display-name>Response Headers Tags</display-name>
+    <tlib-version>2.2</tlib-version>
+    <short-name>cr</short-name>
+    <tag>
+        <name>response-header</name>
+        <tag-class>org.geektimes.projects.work1.tags.CommonResponseHeadersTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>cacheControl</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <name>pragma</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+
+        <attribute>
+            <name>expires</name>
+            <required>false</required>
+            <type>java.lang.Long</type>
+        </attribute>
+    </tag>
+</taglib>
